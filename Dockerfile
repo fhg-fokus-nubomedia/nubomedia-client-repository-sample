@@ -11,7 +11,7 @@ RUN git clone https://github.com/Kurento/kurento-java.git /home/nubomedia/kurent
 ADD kurento-hello-world-repository /home/nubomedia/kurento-hello-world-repository
 RUN cd /home/nubomedia/kurento-java $$ mvn install -DskipTests -Pdefault
 ADD keystore.jks /
-RUN cd /home/nubomedia/kurento-hello-world-repository && mvn compile
+RUN sudo chown -R nubomedia:nubomedia /home/nubomedia/kurento-hello-world-repository && cd /home/nubomedia/kurento-hello-world-repository && mvn compile
 
 EXPOSE 8443/tcp 8088/tcp 443/tcp 8080/tcp
 
