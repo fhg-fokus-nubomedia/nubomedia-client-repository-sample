@@ -2,9 +2,9 @@ FROM nubomedia/apps-baseimage:v1
 
 MAINTAINER Nubomedia
 
+USER 1000
 RUN mkdir -p /home/nubomedia/.m2
 ADD settings.xml /home/nubomedia/.m2/
-RUN whoami && id
 RUN git clone https://github.com/Kurento/kurento-java.git /home/nubomedia/kurento-java
 ADD kurento-hello-world-repository /home/nubomedia/kurento-hello-world-repository
 RUN sudo chown -R nubomedia:nubomedia /home/nubomedia
