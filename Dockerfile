@@ -2,11 +2,16 @@ FROM nubomedia/apps-baseimage:v1
 
 MAINTAINER Nubomedia
 
-RUN mkdir /tmp/kurento-hello-world-repository/
-ADD kurento-hello-world-repository-6.4.1-SNAPSHOT.jar /tmp/kurento-hello-world-repository/
+RUN mkdir -p /home/nubomedia/.m2
+ADD settings.xml /home/nubomedia/.m2
+RUN git clone https://github.com/Kurento/kurento-java.git /home/nubomedia/kurento-java
+ADD kurento-hello-world-repository /home/nubomedia/kurento-hello-world-repository
+RUN sudo chown -R nubomedia:nubomedia /home/nubomedia
+RUN cd /home/nubomedia/kurento-java $$ mvn install -DskipTests -Pdefault
 ADD keystore.jks /
+RUN cd /home/nubomedia/kurento-hello-world-repository && mvn compile
 
-EXPOSE 8443/tcp 8088/tcp 443/tcp
+EXPOSE 8443/tcp 8088/tcp 443/tcp 8080/tcp
 
-ENTRYPOINT java -jar /tmp/kurento-hello-world-repository/kurento-hello-world-repository-6.4.1-SNAPSHOT.jar
+ENTRYPOINT cd /home/nubomedia/kurento-hello-world-repository && mvn exec:java
 
