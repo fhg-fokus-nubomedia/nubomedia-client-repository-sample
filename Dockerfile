@@ -3,6 +3,7 @@ FROM nubomedia/apps-baseimage:src
 MAINTAINER Nubomedia
 
 USER 1000
+RUN git config --global http.sslverify "false"
 RUN sudo chown -R nubomedia:nubomedia /home/nubomedia
 RUN mkdir -p /home/nubomedia/.m2
 ADD settings.xml /home/nubomedia/.m2/
